@@ -1,4 +1,5 @@
 open Owl
+open Ctrl
 
 (* let dir = Cmdargs.(get_string "-d" |> default "results") *)
 let dir = Cmdargs.(get_string "-d" |> force ~usage:"-d [directory]")
@@ -13,15 +14,6 @@ let a =
 
 let n, _ = Mat.shape a
 
-let simulate =
-  let at = Mat.transpose a in
-  fun ~duration x0 ->
-    let open Owl_ode in
-    let f x _ = Mat.(x *@ at) in
-    let tspec = Types.T1 { t0 = 0.; duration; dt = 1E-3 } in
-    Ode.odeint (module Native.D.RK45) f x0 tspec ()
-
-
 let _ =
   let x0 =
     (* lyapunov A B is the solution to AX + XA^T = B *)
@@ -30,7 +22,7 @@ let _ =
     (* Q = U S V^T *)
     Mat.col u 0 |> Mat.transpose
   in
-  let t, x = simulate ~duration:0.2 x0 in
+  let t, x = Dynamics.simulate ~a ~duration:0.2 x0 in
   Mat.save_txt Mat.(t @|| x) (in_dir "response")
 
 
@@ -42,7 +34,7 @@ let _ =
     |> Mat.transpose
     |> Mat.mapi_rows (fun i x0 ->
            Printf.printf "%i\n%!" i;
-           let t, x = simulate ~duration:0.2 x0 in
+           let t, x = Dynamics.simulate ~a ~duration:0.2 x0 in
            let x2 = Mat.l2norm_sqr ~axis:1 x in
            let dts =
              let t2 = Mat.get_slice [ [ 1; -1 ] ] t in

@@ -1,4 +1,4 @@
 (library
  (name ctrl)
  (public_name ctrl)
- (libraries owl))
+ (libraries owl owl-ode))

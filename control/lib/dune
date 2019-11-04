@@ -2,3 +2,7 @@
  (name ctrl)
  (public_name ctrl)
  (libraries owl owl-ode))
+
+(env
+  (dev
+    (flags (:standard -warn-error -A))))

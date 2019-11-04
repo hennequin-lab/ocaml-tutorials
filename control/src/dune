@@ -1,3 +1,8 @@
 (executable
  (name scratch)
- (libraries cmdargs owl owl-ode ctrl))
+ (libraries cmdargs owl owl-ode owl-opt owl-opt-lbfgs ctrl)
+ (preprocess (pps ppx-owl-opt)))
+
+(env
+  (dev
+    (flags (:standard -warn-error -A))))

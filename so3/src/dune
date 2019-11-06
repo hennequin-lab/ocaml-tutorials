@@ -1,0 +1,7 @@
+(executable
+ (name so3)
+ (libraries cmdargs owl))
+
+(env
+  (dev
+    (flags (:standard -warn-error -A))))

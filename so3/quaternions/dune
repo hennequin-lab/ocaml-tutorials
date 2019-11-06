@@ -1,0 +1,8 @@
+(library
+ (name quaternions)
+ (public_name quaternions)
+ (libraries owl))
+
+(env
+  (dev
+    (flags (:standard -warn-error -A))))

@@ -9,6 +9,8 @@ val dot_prod : t -> t -> float
 val ( * ) : t -> t -> t
 
 (** Geodesic distance on SO(3) *)
+val cos_geodesic_distance : t -> t -> float
+
 val geodesic_distance : t -> t -> float
 
 (** place a quaternion inside the 3D ball used to visualise them *)

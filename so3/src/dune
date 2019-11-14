@@ -1,6 +1,6 @@
 (executable
  (name so3)
- (libraries cmdargs owl quaternions))
+ (libraries cmdargs owl quaternions owl-ode owl-ode-sundials gp))
 
 (env
   (dev

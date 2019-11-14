@@ -32,9 +32,9 @@ let ( * ) (a1, u1) (a2, u2) =
   a, u
 
 
-let geodesic_distance q1 q2 = Maths.(acos ((2. *. sqr (dot_prod q1 q2)) -. 1.))
+let cos_geodesic_distance q1 q2 = Maths.((2. *. sqr (dot_prod q1 q2)) -. 1.)
+let geodesic_distance q1 q2 = Maths.(acos (cos_geodesic_distance q1 q2))
 
-(* place a quaternion inside the 3D ball used to visualise them *)
 let to3D (a, u) =
   let theta = 2. *. Maths.acos a in
   let u = Mat.(u /$ Maths.(sin (theta /. 2.))) in
@@ -47,12 +47,9 @@ let rec draw (a, b) p =
   if Stats.uniform_rvs ~a:0. ~b:1. < p z then z else draw (a, b) p
 
 
-(* sample quaternions from a geodesic-uniform distribution on SO(3) *)
 let sample () =
   let theta = draw (0., Const.pi2) (fun _ -> 1.) in
   let phi = draw (-.Const.pi /. 2., Const.pi /. 2.) (fun phi -> Maths.cos phi) in
   let r = draw (0., Const.pi) (fun r -> Maths.(sqr (sin (r /. 2.)))) in
-  let u =
-    Mat.of_array [| cos phi *. cos theta; cos phi *. sin theta; sin phi |] 1 (-1)
-  in
+  let u = Mat.of_array [| cos phi *. cos theta; cos phi *. sin theta; sin phi |] 1 (-1) in
   create r u

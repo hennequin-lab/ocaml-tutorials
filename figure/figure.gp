@@ -15,6 +15,65 @@ set multiplot
 # your plot goes HERE
 # (you have a HUGE canvas to play with)
 
+set lmargin at screen 0.11
+set rmargin at screen 0.2
+set tmargin at screen 0.9
+set bmargin at screen 0.85
+set xrange [-pi:pi] 
+set yrange [-1.1:1.1] 
+set border 1+2
+set tics nomirror
+set xtics ('$-\pi$' -pi, '$0$' 0, '$+\pi$' pi)
+set ytics -0.8, 0.4
+set xlabel "time"
+set ylabel "something"
+
+plot sin(x) with line lw 3 lc rgb 'black'
+
+# some fake scatter plot
+
+set lmargin at screen 0.22
+set rmargin at screen 0.27
+set autoscale
+set border 1+2
+set tics nomirror
+set xtics auto
+set ytics auto
+set xlabel "something"
+set ylabel "something else" offset -1, 0
+fit a*x+b 'fake_data1' using 1:2 via a,b
+plot 'fake_data1' u 1:2 w p pt 7 ps 1 lc rgb '#cc000000', \
+  a*x+b with line lw 3 lc 7 dt 2
+   
+
+# some fake scatter plot in another way
+
+set lmargin at screen 0.11
+set rmargin at screen 0.16
+set tmargin at screen 0.83
+set bmargin at screen 0.78
+set autoscale
+set border 1+2
+set tics nomirror
+set xtics auto
+set ytics auto
+set xlabel "something"
+set ylabel "something else" offset -1, 0
+f(x) = x**3
+load 'parula.pal'
+set cbrange [0:8]
+set cbtics 0,4
+set colorbox user origin graph 1.1, graph 0 size graph 0.05, graph 0.3
+set cblabel "color" offset 1,0 rotate by 270
+plot 'fake_data1' u (f($1)):($2/3.0):(abs($2)) w p pt 7 ps 1 lc palette 
+
+# yerrobars
+# 3D plots
+# heatmaps
+
+# ocaml interface
+# gifs
+
 
 unset multiplot
 unset output

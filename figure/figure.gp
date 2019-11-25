@@ -67,9 +67,20 @@ set colorbox user origin graph 1.1, graph 0 size graph 0.05, graph 0.3
 set cblabel "color" offset 1,0 rotate by 270
 plot 'fake_data1' u (f($1)):($2/3.0):(abs($2)) w p pt 7 ps 1 lc palette 
 
+# heatmaps
+set lmargin at screen 0.19
+set rmargin at screen 0.27
+unset border
+unset tics
+set cbrange [0:*]
+unset colorbox
+set xlabel 'blablr'
+plot 'sequential-mat' mat w image
+
+
+
 # yerrobars
 # 3D plots
-# heatmaps
 
 # ocaml interface
 # gifs

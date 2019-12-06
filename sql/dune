@@ -1,0 +1,8 @@
+(executable
+ (name queries)
+ (libraries cmdargs owl sqlexpr)
+ (preprocess (pps ppx_sqlexpr)))
+
+(env
+  (dev
+    (flags (:standard -warn-error -A))))
